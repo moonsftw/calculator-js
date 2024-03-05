@@ -37,8 +37,12 @@ class Calculator {
     if (digit === "." && this.currentOperand.includes(".")) return;
     // if number is zero do not allow multiple initial zeros
     if (digit === '0' && this.currentOperand === '0') return;
+
+    if (this.currentOperand === '0' && digit !== '0' && digit !== '.'){
+      this.currentOperand = '';
+    }
     // if digit is .  and there are no prior digits, add a zero
-    if (digit === '0' && this.currentOperand === '') this.currentOperand = '0';
+    if (digit === '.' && this.currentOperand === '') this.currentOperand = '0';
 
     this.currentOperand += digit;
   }
