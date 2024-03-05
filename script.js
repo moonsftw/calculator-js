@@ -10,6 +10,8 @@ const allClearButton = document.querySelector('[data-all-clear]');
 const deleteButton = document.querySelector('[data-delete]');
 const equalsButton = document.querySelector('[data-equals]');
 
+const calculatorContainerElement = document.querySelector('.calculator-grid');
+
 //Constructor 
 
 class Calculator {
@@ -43,7 +45,7 @@ class Calculator {
 
   selectOperation(operation) {
 
-    if(this.currentOperand === '' && operation === '-'){
+    if (this.currentOperand === '' && operation === '-') {
       this.appendDigit(operation);
       return;
     }
@@ -68,7 +70,7 @@ class Calculator {
         result = prev + current;
         break;
       case '-':
-        result = prev - current; 
+        result = prev - current;
         break;
       case '*':
         result = prev * current;
@@ -76,12 +78,12 @@ class Calculator {
       case '÷':
         result = prev / current
         break;
-    
+
       default:
         return;
     }
     this.currentOperand = result.toString();
-    this.operation = undefined; 
+    this.operation = undefined;
     this.previousOperand = '';
   }
 
@@ -131,3 +133,50 @@ operatorButtons.forEach(button => {
     calculator.updateDisplay();
   })
 })
+
+window.addEventListener('keyup', (e) => {
+  switch (e.key) {
+    case 'Escape': 
+      calculator.allClear();
+      break;
+    case 'Backspace':
+    case 'Delete':
+      calculator.deleteDigit();
+      break;
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+    case '0':
+    case '.':
+      calculator.appendDigit(e.key);
+      break;
+    case '+':
+    case '-':
+    case '*':
+      calculator.selectOperation(e.key);
+      break;
+    case '/':
+      calculator.selectOperation('÷');
+      break;
+    case 'Enter':
+      calculator.calculate();
+      break;
+      default:
+        break;
+      }
+      calculator.updateDisplay();
+})
+
+
+
+
+
+
+
+
