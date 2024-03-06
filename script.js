@@ -38,7 +38,7 @@ class Calculator {
     // if number is zero do not allow multiple initial zeros
     if (digit === '0' && this.currentOperand === '0') return;
 
-    if (this.currentOperand === '0' && digit !== '0' && digit !== '.'){
+    if (this.currentOperand === '0' && digit !== '0' && digit !== '.') {
       this.currentOperand = '';
     }
     // if digit is .  and there are no prior digits, add a zero
@@ -138,14 +138,12 @@ operatorButtons.forEach(button => {
 
 window.addEventListener('keyup', (e) => {
   switch (e.key) {
-    case 'Escape': 
+    case 'Escape':
       calculator.allClear();
-      calculator.updateDisplay();
       break;
     case 'Backspace':
     case 'Delete':
       calculator.deleteDigit();
-      calculator.updateDisplay();
       break;
     case '1':
     case '2':
@@ -159,25 +157,22 @@ window.addEventListener('keyup', (e) => {
     case '0':
     case '.':
       calculator.appendDigit(e.key);
-      calculator.updateDisplay();
       break;
     case '+':
     case '-':
     case '*':
       calculator.selectOperation(e.key);
-      calculator.updateDisplay();
       break;
     case '/':
       calculator.selectOperation('÷');
-      calculator.updateDisplay();
       break;
     case 'Enter':
       calculator.calculate();
-      calculator.updateDisplay();
       break;
-      default:
-        break;
-      }
+    default:
+      return;
+  }
+  calculator.updateDisplay();
 })
 
 
