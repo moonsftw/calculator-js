@@ -9,6 +9,7 @@ const operatorButtons = document.querySelectorAll('[data-operator]');
 const allClearButton = document.querySelector('[data-all-clear]');
 const deleteButton = document.querySelector('[data-delete]');
 const equalsButton = document.querySelector('[data-equals]');
+const allButtons = [ ...numberButtons, ...operatorButtons, allClearButton, deleteButton, equalsButton ]
 
 const calculatorContainerElement = document.querySelector('.calculator-grid');
 
@@ -90,15 +91,40 @@ class Calculator {
   }
 
   updateDisplay() {
-    this.currentOperandTextElement.innerText = this.currentOperand;
+    this.currentOperandTextElement.innerText = this.formatAsNumber(this.currentOperand);
 
     if (this.operation !== undefined) {
-      this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`;
+      this.previousOperandTextElement.innerText = `${this.formatAsNumber(this.previousOperand)} ${this.operation}`;
     } else {
       this.previousOperandTextElement.innerText = '';
     }
   }
 
+  formatAsNumber(numberAsString) {
+    /* if(numberAsString === '') return '0'
+    const number = parseFloat(numberAsString);
+    return number.toLocaleString('en-us'); */
+
+    if(numberAsString === '') return '0'
+    
+    let formattedString = '';
+    const integerDigits = parseFloat(numberAsString.split('.')[0]);
+    const decimalDigitsAsString = numberAsString.split('.')[1];
+
+    if (decimalDigitsAsString === undefined) {
+      formattedString = integerDigits.toLocaleString('en-us');
+    } else {
+      formattedString = `${integerDigits.toLocaleString('en-us')}.${decimalDigitsAsString}`;
+    }
+
+    return formattedString;
+  }
+
+  animateButton(buttonValue){
+    const buttonPressed = allButtons.find(button => button.innerText === buttonValue);
+    buttonPressed.classList.add('key-pressed');
+    setTimeout(() => { buttonPressed.classList.remove('key-pressed') }, 200);
+  }
 
 } /* class Calculator */
 
@@ -173,6 +199,7 @@ window.addEventListener('keyup', (e) => {
       return;
   }
   calculator.updateDisplay();
+  calculator.animateButton(e.key);
 })
 
 
