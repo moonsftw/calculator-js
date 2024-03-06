@@ -67,8 +67,6 @@ class Calculator {
 
     if (isNaN(prev) || isNaN(current)) return;
 
-    console.log(`prev: ${prev} current: ${current}`)
-
     switch (this.operation) {
       case '+':
         result = prev + current;
@@ -142,10 +140,12 @@ window.addEventListener('keyup', (e) => {
   switch (e.key) {
     case 'Escape': 
       calculator.allClear();
+      calculator.updateDisplay();
       break;
     case 'Backspace':
     case 'Delete':
       calculator.deleteDigit();
+      calculator.updateDisplay();
       break;
     case '1':
     case '2':
@@ -159,22 +159,25 @@ window.addEventListener('keyup', (e) => {
     case '0':
     case '.':
       calculator.appendDigit(e.key);
+      calculator.updateDisplay();
       break;
     case '+':
     case '-':
     case '*':
       calculator.selectOperation(e.key);
+      calculator.updateDisplay();
       break;
     case '/':
       calculator.selectOperation('÷');
+      calculator.updateDisplay();
       break;
     case 'Enter':
       calculator.calculate();
+      calculator.updateDisplay();
       break;
       default:
         break;
       }
-      calculator.updateDisplay();
 })
 
 
